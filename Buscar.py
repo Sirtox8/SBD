@@ -16,3 +16,24 @@ libros = librosColeccion.find(miquery) # Busca los que tienen el precio mayor qu
 miquery = { "titulo":  { "$regex": "^D" } }
 
 libros = librosColeccion.find(miquery) # Busca a toso los que tengan un título que empieza por D
+
+print("Listado de libros con expresion AND")
+libros= librosColeccion.find({ "$and" : [
+                                                     { "paginas" : {"$lt": 400 }},
+                                                     { "precio" : { "$gt":7} }
+                                                   ]
+                                           }
+                                           )
+print("Listado de libros con expresión OR")
+
+libros= librosColeccion.find({ "$or" : [
+                                                     { "paginas" : {"$lt": 400 }},
+                                                     { "precio" : { "$gt":7} }
+                                                   ]
+                                           }
+                                           ).sort("Titulo")
+print("Listado de libros ordenados por precio descendente")
+
+for l in libros:
+    print(f"Libros que cumplen: {l}")
+
